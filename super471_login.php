@@ -11,14 +11,16 @@
 		<div class="loginbox">
 		<img src="css_and_imgs/silhouette-logo.png" class="silh-logo">
 			<h1>Login</h1>
-			<form method="POST" /*action="<?php echo $_SERVER['PHP_SELF']; ?>"*/>
+			<form method="post" >
 				<p>Email</p>
-				<input type="text" name="u_email" placeholder="Enter Email">
+				<input type="text" name="u_email" 
+				value="<?php echo (isset($_SESSION['user']) ? htmlspecialchars($_SESSION['user']) : ''); ?>"
+				placeholder = 'Enter Email'>
 				<p>Password</p>
 				<input type="password" name="user_pw" placeholder="Enter Password">
 				<input type="checkbox" name="rem_login" value="Remember"><p2>Remember Me</p2>
 				<input type="submit" name="" value="Login">
-				<a href="super471_register.php">Register New Account</a><br>
+				<a href="./super471_register.php">Register New Account</a><br>
 			</form>
 
 		</div>
@@ -30,10 +32,8 @@
 <?php
 $email = "";
 $password = "";
-$errors = "";
 
-require_once('./inc/dbinfo.php'); 
-$connection = mysqli_connect($dbserver, $dbusername, $dbpassword, $database);
+require_once('./inc/dbinfo.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = strtolower(filter_var(trim($_POST['u_email']), FILTER_SANITIZE_EMAIL));
@@ -43,11 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($connection, $sql);
     $user_data = mysqli_fetch_array($result);
     
-    if(password_verify($password, $user_data['password_hash'])){
+    if(password_verify($password, $user_data['password'])){
         $_SESSION["user"] = $user_data['user_id'];
-		$_SESSION["loggedin"] = True;
-		$_SESSION["Imember"] = filter_var($_POST['rem_login'], FILTER_VALIDATE_BOOLEAN);
-        header("Location: ./uaj300_dashboard.php");
+		$_SESSION["user_type"] = $user_data['type'];
+        header("./index.php");
     }else{
        echo "email password combination does not exist in database";
     }
