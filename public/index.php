@@ -30,7 +30,8 @@
 				<h1><a href="view_my_events.php">View My Events</a><br></h1>
 				<h1><a href="view_events.php">View All Events</a><br></h1>
 				<h1><a href="create_event.php">Create An Event</a><br></h1>
-				<h1><a href="view_events.php">View Heroes</a><br></h1>
+				<h1><a href="view_heroes.php">View Heroes</a><br></h1>
+				<h1><a href="user_settings.php">My Settings</a><br></h1>
 				<h1><a href="logout.php">Logout</a><br></h1>
 			</form>
 

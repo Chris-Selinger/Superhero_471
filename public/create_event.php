@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	if (!isset($_SESSION["user_type"])) {
+	if (!isset($_SESSION["user"])) {
 		header("Location: ../index.php");
 	}
 	
@@ -65,7 +65,7 @@
 				$listlocs = mysqli_query($connection, $query_locs);
 					
 				while($row1 = mysqli_fetch_assoc($listlocs)){
-					$output = "{$row1['name']} at lat: {$row1['latitude']} and long: {$row1['longitude']}";
+					$output = "{$row1['l_name']} at lat: {$row1['latitude']} and long: {$row1['longitude']}";
 					${$output} = $row1['location_id'];
 					echo "<option> $output </option>";
 				}
@@ -130,7 +130,7 @@
 		
 		if (null!=$name and null!=$description and null!=$time){
 			$event_id = guidv4(openssl_random_pseudo_bytes(16));
-			$query_event = "INSERT INTO event_data (event_id, poster_id, location_id, date_id, name, type, description, start_time) " 
+			$query_event = "INSERT INTO event_data (event_id, poster_id, location_id, date_id, e_name, type, description, start_time) " 
 				. " VALUES ('$event_id', '{$user_data['user_id']}', '$location_id', '$date_id', '$name', '$type', "
 				. " '$description', '$time');";
 			$new_event = mysqli_query($connection, $query_event);

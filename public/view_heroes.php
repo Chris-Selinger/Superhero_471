@@ -16,16 +16,13 @@
         
         $searchValue = $_POST['searchingValue'];
         $searchquery = "SELECT * " 
-					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
-					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
-					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
-					. " WHERE CONCAT('event_type`, 'description', 'location', 'date', 'name') LIKE '%".$searchValue."%'";
+					. " FROM user_data ";
+					//. " WHERE is_hero=1 AND CONCAT('event_type`, 'description', 'location', 'date', 'name') LIKE '%".$searchValue."%'";
         $searchResult = mysqli_query($connection, $searchquery);
     } else {
         $searchquery = "SELECT * " 
-					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
-					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
-					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id";
+					. " FROM user_data"
+					. " WHERE is_hero=1";
         $searchResult = mysqli_query($connection, $searchquery);
     }
 	
@@ -34,7 +31,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>View Events</title>
+  <title>View Heroes</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">    
@@ -44,7 +41,7 @@
 <body>
 
 <div class="container">
-  <h2>Events</h2>
+  <h2>Heroes</h2>
 
 <form method = "post" action =   "<?php echo $_SERVER['PHP_SELF'];?>">
      <input type = "text" name = "searchingValue" placeholder="Search">
@@ -54,23 +51,20 @@
     <thead>
       <tr>
 	    <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Date</th>
-		<th>Posted By</th>
-
+        <th>Powers</th>
+        <th>Costumes</th>
+        <th>Sidekick</th>
+		<th>Fan Page</th>
       </tr>
     </thead>
     <tbody>
      <?php while(null != $searchResult and $row = mysqli_fetch_assoc($searchResult)): ?>
       <tr>
-		<td><a href="view_event.php?id_number=<?php echo $row['event_id'] ?>"><?php echo $row['e_name'] ?></a></td>
-        <td><?php echo $row['type'] ?></td>
-        <td><?php echo $row['description']?></td>
-        <td><?php echo "{$row['l_name']} at lat: {$row['latitude']} and long: {$row['longitude']}"?></td>
-        <td><?php echo "{$row['month']} {$row['day']}, {$row['year']}"?></td>
-		<td><?php echo $row['u_name']?></td>
+		<td><a href="view_event.php?id_number=<?php echo $row['user_id'] ?>"><?php echo $row['u_name'] ?></a></td>
+        <td><?php echo "has powers"; ?> </td>
+        <td><?php echo "has costumes"; ?> </td>
+        <td><?php echo "has a sidekick"; ?> </td>
+		<td><?php echo $row['u_name']; ?> </td>
       </tr>
     <?php endwhile;?>
     </tbody>

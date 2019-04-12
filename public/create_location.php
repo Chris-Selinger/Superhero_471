@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	if (!isset($_SESSION["user_type"])) {
+	if (!isset($_SESSION["user"])) {
 		header("Location: ../index.php");
 	}
 
@@ -86,11 +86,11 @@
 		$lon = filter_var(trim($_POST['longitude']), FILTER_SANITIZE_STRING);
 		$address = filter_var(trim($_POST['address']), FILTER_SANITIZE_STRING);
 		
-        $query = "SELECT * FROM location_data WHERE name='$name' AND latitude='$lat' AND longitude='$lon';";
+        $query = "SELECT * FROM location_data WHERE l_name='$name' AND latitude='$lat' AND longitude='$lon';";
         $result = mysqli_query($connection, $query);
 		if (null == mysqli_fetch_assoc($result) and null!=$name and null!=$lat and null!=$lon and (null!=$address or 'venue'!=$type)){
 			$location_id = guidv4(openssl_random_pseudo_bytes(16));
-			$query = "INSERT INTO location_data (location_id, name, type, latitude, longitude, address) "
+			$query = "INSERT INTO location_data (location_id, l_name, type, latitude, longitude, address) "
 				. " VALUES ('$location_id', '$name', '$type', '$lat', '$lon', '$address');";
 			$result = mysqli_query($connection, $query);
 		}
