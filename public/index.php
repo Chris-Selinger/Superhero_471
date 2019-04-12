@@ -27,10 +27,10 @@
 		<img src="../css_and_imgs/silhouette-logo.png" class="silh-logo">
 			<h1>Options</h1>
 			<form >
-				<a href="view_events.php">View Events</a><br>
-				<a href="view_events.php">Create Event</a><br>
-				<a href="view_events.php">View Heroes</a><br>
-				<a href="logout.php">Logout</a><br>
+				<h1><a href="view_events.php">View Events</a><br></h1>
+				<h1><a href="create_event.php">Create Event</a><br></h1>
+				<h1><a href="view_events.php">View Heroes</a><br></h1>
+				<h1><a href="logout.php">Logout</a><br></h1>
 			</form>
 
 		</div>
@@ -38,16 +38,3 @@
 
 	
 </html>
-                <li>
-                    
-				</li>
-                <li>
-                    <a href="#" class="active1" onclick="return openPage('./add_event.php');"></i>Add Event</a>
-				</li>
-                <li>
-                    <a href="#" class="active1" onclick="return openPage('./view_heroes.php');"></i>View Heroes</a>
-				</li>
-                    
-
-</html>
-
