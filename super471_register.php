@@ -67,6 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 }
 
+//Generates UUID
+//credit to Jack on stackoverflow
 function guidv4($data)
 {
     assert(strlen($data) == 16);

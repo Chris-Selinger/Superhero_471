@@ -14,7 +14,7 @@
 			<form method="post" >
 				<p>Email</p>
 				<input type="text" name="u_email" 
-				value="<?php echo (isset($_SESSION['user']) ? htmlspecialchars($_SESSION['user']) : ''); ?>"
+				value="<?php echo (isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : ''); ?>"
 				placeholder = 'Enter Email'>
 				<p>Password</p>
 				<input type="password" name="user_pw" placeholder="Enter Password">
@@ -43,13 +43,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($connection, $sql);
     $user_data = mysqli_fetch_array($result);
     
-    if(password_verify($password, $user_data['password'])){
+    //if(password_verify($password, $user_data['password'])){
         $_SESSION["user"] = $user_data['user_id'];
+		$_SESSION["email"] = $user_data['email'];
 		$_SESSION["user_type"] = $user_data['type'];
-        header("./index.php");
-    }else{
-       echo "email password combination does not exist in database";
-    }
+        header("Location: index.php");
+    //}else{
+    //   echo "'{$user_data['email']}' and password ie. '{$user_data['password']}' combination does not exist in database";
+    //}
     
 }
 

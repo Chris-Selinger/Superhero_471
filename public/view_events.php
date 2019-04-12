@@ -1,6 +1,16 @@
 <?php
 	session_start();
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/inc/dbinfo.php');
+	
+	//if (!isset($_SESSION["user_type"])) {
+	//	header("Location: ../index.php");
+	//}
+
+	require_once('../inc/dbinfo.php');
+	
+	$user = $_SESSION['user'];
+	$sql = "SELECT * FROM user_data WHERE user_id = '$user'";
+	$result = mysqli_query($connection, $sql);
+    $user_data = mysqli_fetch_array($result);
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         
@@ -12,7 +22,9 @@
         $searchResult = searchTable($query);
     }
     function searchTable($query) {
-        $searchedResult = mysqli_query($connection,$query);
+		$searchedResult = null;
+		if (null!=mysqli_query($connection, $query))
+        $searchedResult = mysqli_query($connection, $query);
         return $searchedResult;
     }
 ?>
@@ -48,7 +60,7 @@
       </tr>
     </thead>
     <tbody>
-     <?php while($row = mysqli_fetch_array($searchResult)): ?>
+     <?php while(null != $searchResult and $row = mysqli_fetch_assoc($searchResult)): ?>
       <tr>
         <td><?php echo $row['type'] ?></td>
         <td><?php echo $row['description']?></td>
