@@ -4,13 +4,20 @@
 	//if (!isset($_SESSION["user_type"])) {
 	//	header("Location: ../index.php");
 	//}
+	
+	require_once('../inc/dbinfo.php');
+	
+	$user = $_SESSION['user'];
+	$sql = "SELECT * FROM user_data WHERE user_id = '$user'";
+	$result = mysqli_query($connection, $sql);
+    $user_data = mysqli_fetch_assoc($result);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Staff <Entry></Entry></title>
+  <title>Create Event</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -48,21 +55,46 @@
         <input type="text" class="form-control" placeholder="Enter Description" name="description">
       </div>
     </div>
+	
      <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Location</label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" placeholder="Enter Location" name="location">
+        <select class="form-control" name="location">
+			<?php
+				$query_locs = "SELECT * FROM location_data;";
+				$listlocs = mysqli_query($connection, $query_locs);
+					
+				while($row1 = mysqli_fetch_assoc($listlocs)){
+					$output = "{$row1['name']} at lat: {$row1['latitude']} and long: {$row1['longitude']}";
+					${$output} = $row1['location_id'];
+					echo "<option> $output </option>";
+				}
+			?>			
+		</select>
       </div>
     </div>
 	<a href="create_location.php">Create Location (if not in list)</a><br>
-     <div class="form-group">
+     
+	 <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Date</label>
       <div class="col-sm-10">          
-        <input type="text" class="form-control" placeholder="Enter Date" name="date">
+        <select class="form-control" name="date">
+			<?php
+				$query_dates = "SELECT * FROM date_data;";
+				$listdates = mysqli_query($connection, $query_dates);
+					
+				while($row2 = mysqli_fetch_assoc($listdates)){
+					$output = "{$row2['month']} {$row2['day']}, {$row2['year']}";
+					${$output} = $row2['date_id'];
+					echo "<option> $output </option>";
+				}
+			?>			
+		</select>
       </div>
     </div>
 	<a href="create_date.php">Create Date (if not in list)</a><br>
-	   <div class="form-group">
+	
+	<div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Time</label>
       <div class="col-sm-10">          
         <input type="text" class="form-control" placeholder="Enter Start Time" name="time">
@@ -83,12 +115,7 @@
    
 
 <?php
-	require_once('../inc/dbinfo.php');
-	
-	$user = $_SESSION['user'];
-	$sql = "SELECT * FROM user_data WHERE user_id = '$user'";
-	$result = mysqli_query($connection, $sql);
-    $user_data = mysqli_fetch_array($result);
+
 /*
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         

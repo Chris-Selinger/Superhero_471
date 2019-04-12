@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Staff <Entry></Entry></title>
+  <title>Create Location</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -88,7 +88,7 @@
 		
         $query = "SELECT * FROM location_data WHERE name='$name' AND latitude='$lat' AND longitude='$lon';";
         $result = mysqli_query($connection, $query);
-		if (null == $result){
+		if (null == mysqli_fetch_assoc($result) and null!=$name and null!=$lat and null!=$lon){
 			$location_id = guidv4(openssl_random_pseudo_bytes(16));
 			$query = "INSERT INTO location_data (location_id, name, type, latitude, longitude, address) "
 				. " VALUES ('$location_id', '$name', '$type', '$lat', '$lon', '$address');";

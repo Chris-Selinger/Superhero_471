@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Staff <Entry></Entry></title>
+  <title>Create Date</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -21,7 +21,7 @@
 
 <div class="container">
   <h2>Enter Event Information </h2>
-  <form class="form-horizontal" method = "post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+  <form class="form-horizontal" method = "post">
    
     <div class="form-group">
       <label class="control-label col-sm-2" for="pwd">Day</label>
@@ -82,7 +82,8 @@
 		
         $query = "SELECT * FROM date_data WHERE day='$day' AND month='$month' AND year='$year';";
         $result = mysqli_query($connection, $query);
-		if (null == $result){
+		
+		if (null == mysqli_fetch_assoc($result) and null!=$day and null!=$year){
 			$date_id = guidv4(openssl_random_pseudo_bytes(16));
 			$query = "INSERT INTO date_data (date_id, day, month, year) VALUES ('$date_id', '$day', '$month', '$year');";
 			$result = mysqli_query($connection, $query);
