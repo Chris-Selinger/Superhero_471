@@ -18,7 +18,7 @@
 				<input type="password" name="u_pw" placeholder="Enter Password">
 				<p>Name</p>
 				<input type="text" name="u_name" placeholder="Enter Name">
-				<input type="checkbox" name="rem_login" value="Hero"><p2>I am a Hero</p2>
+				<input type="checkbox" name="u_hero" value="1"><p2>I am a Hero</p2>
 				<input type="submit" name="" value="Register">
 				<a href="super471_login.php">Return to Login</a><br>
 			</form>
@@ -41,6 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = strtolower(filter_var(trim($_POST['u_email']), FILTER_SANITIZE_EMAIL));
     $password = filter_var(trim($_POST['u_pw']), FILTER_SANITIZE_STRING);
 	$name = filter_var(trim($_POST['u_name']), FILTER_SANITIZE_STRING);
+	if (isset($_POST['test'])){
+		$bool_hero = 1;
+	}else{
+		$bool_hero = 0;
+	}
 
 	$check_exists = "SELECT * FROM user_data WHERE email = '$email'";
 	
@@ -50,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$user_id = guidv4(openssl_random_pseudo_bytes(16));
 		$pass_h = password_hash($password, PASSWORD_DEFAULT);
 
-		$sql = "INSERT INTO user_data (email, name, user_id, password) "
-			. "VALUES ( '$email', '$name', '$user_id', '$pass_h')";
+		$sql = "INSERT INTO user_data (email, u_name, user_id, password, is_hero) "
+			. "VALUES ( '$email', '$name', '$user_id', '$pass_h', '$bool_hero')";
 
 		if (mysqli_query($connection, $sql)) {
 			echo "New record created successfully";

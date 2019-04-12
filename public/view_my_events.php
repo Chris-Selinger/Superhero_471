@@ -18,7 +18,7 @@
 					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
 					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
 					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
-					. " WHERE e.poster_id= '{$_SESSION['user']}'";
+					. " WHERE e.poster_id= '{$_SESSION['user']}';";
         $searchResult1 = mysqli_query($connection, $searchquery1);
 
         $searchValue = $_POST['searchingValue'];
@@ -27,7 +27,7 @@
 					. " LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
 					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
 					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
-					. " WHERE r.responder_id= '{$_SESSION['user']}'";
+					. " WHERE r.responder_id= '{$_SESSION['user']}';";
         $searchResult2 = mysqli_query($connection, $searchquery2);
 		
 		$searchValue = $_POST['searchingValue'];
@@ -36,7 +36,7 @@
 					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
 					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
 					. " WHERE EXISTS(SELECT * FROM userlocation_data AS ul WHERE e.location_id=ul.location_id "
-					. " AND ul.user_id='{$_SESSION['user']}')";
+					. " AND ul.user_id='{$_SESSION['user']}');";
         $searchResult3 = mysqli_query($connection, $searchquery3);
 
 	

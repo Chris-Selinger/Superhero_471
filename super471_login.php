@@ -42,14 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM user_data WHERE email = '$email'";
     $result = mysqli_query($connection, $sql);
     $user_data = mysqli_fetch_array($result);
-    
+	
     //if(password_verify($password, $user_data['password'])){
         $_SESSION["user"] = $user_data['user_id'];
 		$_SESSION["email"] = $user_data['email'];
 		$_SESSION["user_type"] = $user_data['type'];
         header("Location: index.php");
     //}else{
-    //   echo "'{$user_data['email']}' and password ie. '{$user_data['password']}' combination does not exist in database";
+    //   echo "'{$user_data['password']}' is not equal to '$pass_h' combination does not exist in database";
     //}
     
 }
