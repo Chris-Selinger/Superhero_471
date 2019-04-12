@@ -1,9 +1,9 @@
 <?php
 	session_start();
 	
-	//if (!isset($_SESSION["user_type"])) {
-	//	header("Location: ../index.php");
-	//}
+	if (!isset($_SESSION["user_type"])) {
+		header("Location: ../index.php");
+	}
 
 ?>
 
@@ -34,9 +34,9 @@
       <label class="control-label col-sm-2" for="pwd">Type of Location</label>
       <div class="col-sm-10">          
         <select class="form-control" placeholder="Enter Type" name="type">
-			<option value="threat">Region</option>
-			<option value="patrol">City/Town</option>
-			<option value="publicity">Venue</option>
+			<option value="region">Region</option>
+			<option value="city">City/Town</option>
+			<option value="venue">Venue</option>
 		</select>
       </div>
     </div>
@@ -88,7 +88,7 @@
 		
         $query = "SELECT * FROM location_data WHERE name='$name' AND latitude='$lat' AND longitude='$lon';";
         $result = mysqli_query($connection, $query);
-		if (null == mysqli_fetch_assoc($result) and null!=$name and null!=$lat and null!=$lon){
+		if (null == mysqli_fetch_assoc($result) and null!=$name and null!=$lat and null!=$lon and (null!=$address or 'venue'!=$type)){
 			$location_id = guidv4(openssl_random_pseudo_bytes(16));
 			$query = "INSERT INTO location_data (location_id, name, type, latitude, longitude, address) "
 				. " VALUES ('$location_id', '$name', '$type', '$lat', '$lon', '$address');";

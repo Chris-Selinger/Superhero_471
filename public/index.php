@@ -1,9 +1,9 @@
 <?php
 	session_start();
 	
-	//if (!isset($_SESSION["user_type"])) {
-	//	header("Location: ../index.php");
-	//}
+	if (!isset($_SESSION["user"])) {
+		header("Location: ../index.php");
+	}
 
 	require_once('../inc/dbinfo.php');
 	
@@ -27,8 +27,9 @@
 		<img src="../css_and_imgs/silhouette-logo.png" class="silh-logo">
 			<h1>Options</h1>
 			<form >
-				<h1><a href="view_events.php">View Events</a><br></h1>
-				<h1><a href="create_event.php">Create Event</a><br></h1>
+				<h1><a href="view_my_events.php">View My Events</a><br></h1>
+				<h1><a href="view_events.php">View All Events</a><br></h1>
+				<h1><a href="create_event.php">Create An Event</a><br></h1>
 				<h1><a href="view_events.php">View Heroes</a><br></h1>
 				<h1><a href="logout.php">Logout</a><br></h1>
 			</form>

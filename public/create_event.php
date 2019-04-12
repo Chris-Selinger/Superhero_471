@@ -1,9 +1,9 @@
 <?php
 	session_start();
 	
-	//if (!isset($_SESSION["user_type"])) {
-	//	header("Location: ../index.php");
-	//}
+	if (!isset($_SESSION["user_type"])) {
+		header("Location: ../index.php");
+	}
 	
 	require_once('../inc/dbinfo.php');
 	
@@ -116,13 +116,27 @@
 
 <?php
 
-/*
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        
-        $query = "";
-        $result = mysqli_query($connection, $query);
+
+		$name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+		$type = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
+		$description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
+		$location = filter_var($_POST['location'], FILTER_SANITIZE_STRING);
+		$date = filter_var($_POST['date'], FILTER_SANITIZE_STRING);
+		$time = filter_var($_POST['time'], FILTER_SANITIZE_STRING);
+		
+		$location_id = ${$location};
+		$date_id = ${$date};
+		
+		if (null!=$name and null!=$description and null!=$time){
+			$event_id = guidv4(openssl_random_pseudo_bytes(16));
+			$query_event = "INSERT INTO event_data (event_id, poster_id, location_id, date_id, name, type, description, start_time) " 
+				. " VALUES ('$event_id', '{$user_data['user_id']}', '$location_id', '$date_id', '$name', '$type', "
+				. " '$description', '$time');";
+			$new_event = mysqli_query($connection, $query_event);
+
+		}
     }
-*/
 
 //Generates UUID
 //credit to Jack on stackoverflow
