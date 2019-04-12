@@ -14,7 +14,19 @@
 	
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         
-
+        $searchValue = $_POST['searchingValue'];
+        $searchquery = "SELECT * " 
+					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
+					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
+					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
+					. " WHERE CONCAT() LIKE '%".$searchValue."%'";
+        $searchResult = mysqli_query($connection, $searchquery);
+    } else {
+        $searchquery = "SELECT * " 
+					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
+					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
+					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id";
+        $searchResult = mysqli_query($connection, $searchquery);
     }
 	
 ?>
@@ -41,7 +53,12 @@
   <table class="table table-bordered table table-hover">
     <thead>
       <tr>
-
+	    <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Date</th>
+		<th>Posted By</th>
 
       </tr>
     </thead>
@@ -50,7 +67,10 @@
       <tr>
 		<td><a href="view_event.php?id_number=<?php echo $row['event_id'] ?>"><?php echo $row['e_name'] ?></a></td>
         <td><?php echo $row['type'] ?></td>
-
+        <td><?php echo $row['description']?></td>
+        <td><?php echo "{$row['l_name']} at lat: {$row['latitude']} and long: {$row['longitude']}"?></td>
+        <td><?php echo "{$row['month']} {$row['day']}, {$row['year']}"?></td>
+		<td><?php echo $row['u_name']?></td>
       </tr>
     <?php endwhile;?>
     </tbody>
