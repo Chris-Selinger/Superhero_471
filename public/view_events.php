@@ -19,7 +19,7 @@
 					. "FROM event_data AS e LEFT JOIN user_data AS u ON e.poster_id=u.user_id "
 					. " LEFT JOIN location_data AS l ON e.location_id=l.location_id "
 					. " LEFT JOIN date_data AS d ON e.date_id=d.date_id"
-					. " WHERE CONCAT('event_type`, 'description', 'location', 'date', 'e_name', '') LIKE '%".$searchValue."%'";
+					. " WHERE CONCAT('event_type`, 'description', 'location', 'date', 'name') LIKE '%".$searchValue."%'";
         $searchResult = mysqli_query($connection, $searchquery);
     } else {
         $searchquery = "SELECT * " 

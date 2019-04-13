@@ -18,7 +18,7 @@
 				<input type="password" name="u_pw" placeholder="Enter Password">
 				<p>Name</p>
 				<input type="text" name="u_name" placeholder="Enter Name">
-				<input type="checkbox" name="u_hero" value="1"><p2>I am a Hero</p2>
+				<input type="checkbox" name="rem_login" value="Hero"><p2>I am a Hero</p2>
 				<input type="submit" name="" value="Register">
 				<a href="super471_login.php">Return to Login</a><br>
 			</form>
@@ -26,7 +26,7 @@
 		</div>
 	</body>
 
-	
+
 </html>
 
 <?php
@@ -34,29 +34,24 @@ $email = "";
 $password = "";
 $name = "";
 
-require_once('./inc/dbinfo.php'); 
+require_once('./inc/dbinfo.php');
 $connection = mysqli_connect($dbserver, $dbusername, $dbpassword, $database);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = strtolower(filter_var(trim($_POST['u_email']), FILTER_SANITIZE_EMAIL));
     $password = filter_var(trim($_POST['u_pw']), FILTER_SANITIZE_STRING);
 	$name = filter_var(trim($_POST['u_name']), FILTER_SANITIZE_STRING);
-	if (isset($_POST['test'])){
-		$bool_hero = 1;
-	}else{
-		$bool_hero = 0;
-	}
 
 	$check_exists = "SELECT * FROM user_data WHERE email = '$email'";
-	
+
 	if (null!=$email and null!=$password and null!=$name){
 	if (0 == mysqli_num_rows(mysqli_query($connection, $check_exists))){
 
 		$user_id = guidv4(openssl_random_pseudo_bytes(16));
 		$pass_h = password_hash($password, PASSWORD_DEFAULT);
 
-		$sql = "INSERT INTO user_data (email, u_name, user_id, password, is_hero) "
-			. "VALUES ( '$email', '$name', '$user_id', '$pass_h', '$bool_hero')";
+		$sql = "INSERT INTO user_data (email, u_name, user_id, password) "
+			. "VALUES ( '$email', '$name', '$user_id', '$pass_h')";
 
 		if (mysqli_query($connection, $sql)) {
 			echo "New record created successfully";
@@ -69,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	} else {
 		echo "missing required field";
 	}
-    
+
 }
 
 //Generates UUID
